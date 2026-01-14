@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+let listIndex = 0;
+
 export default function Home() {
   return <Grocery />;
 }
@@ -15,7 +17,13 @@ const Grocery = () => {
   };
 
   const add = () => {
-    const newList = [...list, value];
+    const newList = [
+      ...list,
+      {
+        id: listIndex++,
+        text: value,
+      },
+    ];
     setList(newList);
   };
   return (
@@ -24,6 +32,7 @@ const Grocery = () => {
 };
 
 const GroceryList = ({ value, onChange, add, list }) => {
+  const deleted = () => {};
   return (
     <div className=" h-screen  bg-[#f9fafc]">
       <div className="flex justify-center">
@@ -43,8 +52,15 @@ const GroceryList = ({ value, onChange, add, list }) => {
               Add item
             </button>
             <ul>
-              {list.map((item, index) => {
-                return <li key={index}>{item}</li>;
+              {list.map((item) => {
+                return (
+                  <div className="flex justify-between">
+                    <li key={item.id}>{item.text}</li>
+                    <button className="bg-black text-white w-12.5 h-6.25 mt-2 rounded-sm text-xs">
+                      Delete
+                    </button>
+                  </div>
+                );
               })}
             </ul>
           </div>
