@@ -79,7 +79,9 @@ const GroceryList = ({
   return (
     <div className=" h-screen  bg-[#f9fafc]">
       {notification && (
-        <div className="flex justify-center text-green-600">{notification}</div>
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 bg-green-100 text-green-600 px-6 py-3 rounded-lg shadow-lg z-50">
+          {notification}
+        </div>
       )}
       <div className="flex justify-center">
         <div className="bg-[#ffffff] w-150 mt-50 flex flex-col justify-center items-center p-8 rounded-xl shadow-md">
