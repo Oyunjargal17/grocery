@@ -8,14 +8,22 @@ export default function Home() {
 
 const Grocery = () => {
   const [value, setValue] = useState("");
+  const [list, setList] = useState([]);
+
   const onChange = (event) => {
     setValue(event.target.value);
   };
-  console.log(value);
-  return <GroceryList value={value} onChange={onChange} />;
+
+  const add = () => {
+    const newList = [...list, value];
+    setList(newList);
+  };
+  return (
+    <GroceryList value={value} onChange={onChange} add={add} list={list} />
+  );
 };
 
-const GroceryList = ({ value, onChange }) => {
+const GroceryList = ({ value, onChange, add, list }) => {
   return (
     <div className=" h-screen  bg-[#f9fafc]">
       <div className="flex justify-center">
@@ -28,9 +36,17 @@ const GroceryList = ({ value, onChange }) => {
               className="border border-gray-300 w-[300px] h-[30px]"
               type="text"
             />
-            <button className="bg-[#07b6d5] text-[#d0f6fa] w-[100px] h-[30px] rounded-r-lg">
+            <button
+              onClick={add}
+              className="bg-[#07b6d5] text-[#d0f6fa] w-[100px] h-[30px] rounded-r-lg"
+            >
               Add item
             </button>
+            <ul>
+              {list.map((item, index) => {
+                return <li key={index}>{item}</li>;
+              })}
+            </ul>
           </div>
         </div>
       </div>
