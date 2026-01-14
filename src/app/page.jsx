@@ -7,10 +7,15 @@ export default function Home() {
 }
 
 const Grocery = () => {
-  return <GroceryList />;
+  const [value, setValue] = useState("");
+  const onChange = (event) => {
+    setValue(event.target.value);
+  };
+  console.log(value);
+  return <GroceryList value={value} onChange={onChange} />;
 };
 
-const GroceryList = () => {
+const GroceryList = ({ value, onChange }) => {
   return (
     <div className=" h-screen  bg-[#f9fafc]">
       <div className="flex justify-center">
@@ -18,6 +23,8 @@ const GroceryList = () => {
           <h1 className="text-3xl mb-4">Grocery Bud</h1>
           <div className="px-4 py-2">
             <input
+              value={value}
+              onChange={onChange}
               className="border border-gray-300 w-[300px] h-[30px]"
               type="text"
             />
