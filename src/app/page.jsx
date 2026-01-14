@@ -11,30 +11,76 @@ export default function Home() {
 const Grocery = () => {
   const [value, setValue] = useState("");
   const [list, setList] = useState([]);
+  const [notification, setNotification] = useState("");
 
   const onChange = (event) => {
     setValue(event.target.value);
   };
 
   const add = () => {
-    const newList = [
+    if (!value.trim()) {
+      showNotification("Текстээ оруулна уу!");
+      return;
+    }
+
+    setList([
       ...list,
       {
         id: listIndex++,
         text: value,
+        completed: false,
       },
-    ];
+    ]);
+    showNotification("Амжилттай нэмэгдлээ ✅");
+    setValue("");
+  };
+  const deleted = (id) => {
+    const newDelete = list.filter((item) => item.id !== id);
+    setList(newDelete);
+    showNotification("Амжилттай устгалаа ❌");
+  };
+  const toggleCompleted = (id) => {
+    const newList = list.map((item) =>
+      item.id === id ? { ...item, completed: !item.completed } : item
+    );
     setList(newList);
   };
+
+  const showNotification = (message) => {
+    setNotification(message);
+
+    setTimeout(() => {
+      setNotification("");
+    }, 2000);
+  };
+
   return (
-    <GroceryList value={value} onChange={onChange} add={add} list={list} />
+    <GroceryList
+      value={value}
+      onChange={onChange}
+      add={add}
+      list={list}
+      deleted={deleted}
+      toggleCompleted={toggleCompleted}
+      notification={notification}
+    />
   );
 };
 
-const GroceryList = ({ value, onChange, add, list }) => {
-  const deleted = () => {};
+const GroceryList = ({
+  value,
+  onChange,
+  add,
+  list,
+  deleted,
+  toggleCompleted,
+  notification,
+}) => {
   return (
     <div className=" h-screen  bg-[#f9fafc]">
+      {notification && (
+        <div className="flex justify-center text-green-600">{notification}</div>
+      )}
       <div className="flex justify-center">
         <div className="bg-[#ffffff] w-150 mt-50 flex flex-col justify-center items-center p-8 rounded-xl shadow-md">
           <h1 className="text-3xl mb-4">Grocery Bud</h1>
@@ -52,16 +98,31 @@ const GroceryList = ({ value, onChange, add, list }) => {
               Add item
             </button>
             <ul>
-              {list.map((item) => {
-                return (
-                  <div className="flex justify-between">
-                    <li key={item.id}>{item.text}</li>
-                    <button className="bg-black text-white w-12.5 h-6.25 mt-2 rounded-sm text-xs">
-                      Delete
-                    </button>
+              {list.map((item) => (
+                <li key={item.id} className="flex justify-between">
+                  <div className="flex gap-2 mt-2">
+                    <input
+                      type="checkbox"
+                      checked={item.completed}
+                      onChange={() => toggleCompleted(item.id)}
+                    />
+                    <span
+                      className={
+                        item.completed ? "line-through text-gray-400" : ""
+                      }
+                    >
+                      {item.text}
+                    </span>
                   </div>
-                );
-              })}
+
+                  <button
+                    onClick={() => deleted(item.id)}
+                    className="bg-black text-white w-12.5 h-6.25 mt-2 rounded-sm text-xs"
+                  >
+                    Delete
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
