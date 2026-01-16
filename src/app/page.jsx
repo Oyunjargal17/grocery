@@ -133,33 +133,54 @@ export default function Home() {
 //   );
 // };
 
+// const Grocery = () => {
+//   const [value, setValue] = useState("");
+//   const [items, setItems] = useState([]);
+//   const add = () => {
+//     setItems([...items, value]);
+//     setValue("");
+//   };
+
+//   return (
+//     <div>
+//       <div className="min-h-screen flex flex-col justify-center items-center">
+//         <h1>Grocery Bud</h1>
+//         <div>
+//           <input
+//             value={value}
+//             onChange={(e) => setValue(e.target.value)}
+//             className="border border-gray-700"
+//             type="text"
+//           />
+//           <button className="bg-gray-300" onClick={add}>
+//             Add
+//           </button>
+//           <ul className="mt-4">
+//             {items.map((item, index) => (
+//               <li key={index}> {item}</li>
+//             ))}
+//           </ul>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
 const Grocery = () => {
   const [value, setValue] = useState("");
-  const [items, setItems] = useState([]);
-  const add = () => {
-    setItems([...items, value]);
-    setValue("");
-  };
 
   return (
-    <div>
-      <div className="min-h-screen flex flex-col justify-center items-center">
+    <div className="flex justify-center min-h-screen items-center">
+      <div>
         <h1>Grocery Bud</h1>
         <div>
           <input
             value={value}
             onChange={(e) => setValue(e.target.value)}
-            className="border border-gray-700"
             type="text"
           />
-          <button className="bg-gray-300" onClick={add}>
-            Add
-          </button>
-          <ul className="mt-4">
-            {items.map((item, index) => (
-              <li key={index}> {item}</li>
-            ))}
-          </ul>
+          <button className=" bg-gray-200">Add</button>
+          <p>{value}</p>
         </div>
       </div>
     </div>
