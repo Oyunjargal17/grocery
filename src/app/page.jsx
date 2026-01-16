@@ -168,19 +168,30 @@ export default function Home() {
 
 const Grocery = () => {
   const [value, setValue] = useState("");
+  const [items, setItems] = useState([]);
+
+  const add = () => {
+    setItems([...items, value]);
+    setValue("");
+  };
+  const onChange = (e) => {
+    return setValue(e.target.value);
+  };
 
   return (
     <div className="flex justify-center min-h-screen items-center">
       <div>
         <h1>Grocery Bud</h1>
         <div>
-          <input
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            type="text"
-          />
-          <button className=" bg-gray-200">Add</button>
-          <p>{value}</p>
+          <input value={value} onChange={onChange} type="text" />
+          <button onClick={add} className=" bg-gray-200">
+            Add
+          </button>
+          <ul>
+            {items.map((item, index) => {
+              return <li key={index}>{item}</li>;
+            })}
+          </ul>
         </div>
       </div>
     </div>
